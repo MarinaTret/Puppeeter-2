@@ -4,7 +4,6 @@ const expect = chai.expect;
 const { Given, When, Then, Before, After } = require("cucumber");
 const { clickElement, getText } = require("../../lib/commands.js");
 
-setDefaultTimeout(20000);
 
 Before(async function () {
   const browser = await puppeteer.launch({ headless: false, slowMo: 50 });
@@ -19,7 +18,7 @@ After(async function () {
   }
 });
 
-Given("user visited the page {string}", async function (string) {
+Given("this user visited the page {string}", async function (string) {
   return await this.page.goto(`http://qamid.tmweb.ru${string}`, {
   });
 });
@@ -32,7 +31,7 @@ When("user selects the show time and movie title {string}", async function (sess
   await clickElement(this.page,`.movie-seances__time[href='#'][data-seance-id='${sessionId}']`);
 });
 
-When("user has selected any free seat in the auditorium", async function () {
+When("user has selected any free seat", async function () {
   return await clickElement(this.page, "span[class='buying-scheme__chair buying-scheme__chair_standart']");
 });
 
@@ -46,11 +45,11 @@ Then("sees the booking confirmation with the name of the movie {string}", async 
   expect(movieTitle).contains(expected);
 });  
 
-When("a user selects a seat in the hall that is not available for booking", async function () {
+When("user selects a seat that is not available for booking", async function () {
   return await clickElement(this.page, "span[class='buying-scheme__chair buying-scheme__chair_taken']");
 });
 
-Then("the user understands that the «Reservation» button is inactive", async function () {
+Then("user understands that «Reservation» button is inactive", async function () {
   const acceptinButton = await this.page.$(".acceptin-button");
   const notAvailable = await acceptinButton.evaluate((btn) => btn.disabled);
   expect(notAvailable).to.be.true;

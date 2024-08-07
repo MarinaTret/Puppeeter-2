@@ -13,7 +13,7 @@ afterEach(() => {
   page.close();
 });
 
-describe("Buy one ticket", () => {
+describe("Buy ticket", () => {
   
   test("Reserve one ticket", async () => {
     await clickElement(page, "a:nth-child(6)"); //Выбор даты
